@@ -1,0 +1,94 @@
+1. Logging and identity switching
+Login with admin.
+id
+su -- root
+id
+su -- user
+id
+su -- root
+id
+
+2. Creating and accessing files
+Login with admin.
+id
+cd /tmp
+echo file1 > file1
+echo file2 > file2
+echo file3 > file3
+ls -l
+chmod 640 file2
+chmod 660 file3
+chown :users file3
+ls -l
+su -- user
+cat file1
+cat file2
+cat file3
+echo user >> file1
+echo user >> file2
+echo user >> file3
+exit
+cat file1
+cat file2
+cat file3
+
+3. Creating directories
+Login as root.
+cd /tmp
+mkdir sticky
+chmod 1777 sticky
+ls -ld sticky
+
+su -- admin
+mkdir admin admin-open
+chmod 750 admin
+echo private > admin/private
+echo public > admin-open/public
+echo admin > sticky/admin
+ls -lR
+
+su -- user
+ls admin
+cat admin/private
+ls admin-open
+cat admin-open/private
+ls sticky
+cat sticky/admin
+echo user > sticky/user
+ls -l sticky
+rm sticky/user
+rm sticky/admin
+ls -l sticky
+
+4. Set-user-ID
+Login as admin
+cd /tmp
+cat /bin/cat > newcat
+chmod +x newcat
+chmod u+s newcat
+ls -l newcat
+
+su -- user
+./newcat
+[Ctrl + Z]
+cat
+[Ctrl + Z]
+ps
+
+5. Signals
+Login as admin
+cat
+[Ctrl + Z]
+
+su -- user
+cat
+[Ctrl + Z]
+
+ps
+kill ??
+kill ??
+fg
+exit
+fg
+
+
